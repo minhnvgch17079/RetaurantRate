@@ -155,7 +155,7 @@
                             </tr>
 
                             <tr>
-                                <td>Date And Time Visit <span class="text-danger">(*)</span></td>
+                                <td>Date Visit <span class="text-danger">(*)</span></td>
                                 <td>
                                     <input class="form-control" type="date" name="dateTimeVisit" id="dateTimeVisit">
                                 </td>
@@ -265,6 +265,7 @@
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
     <script type="text/javascript">
         app.initialize();
 
@@ -289,9 +290,11 @@
             let foodRating     = $("#foodRating").val()
             let optionNote     = $("#optionNote").val()
 
-            if (this.validateReporterName(reporterName) !== true)       return false
-            if (this.validateRestaurantName(restaurantName) !== true)   return false
-
+            // if (this.validateReporterName(reporterName) !== true)                return false
+            // if (this.validateRestaurantName(restaurantName) !== true)            return false
+            // if (this.validateEmpty(restaurantType, 'Restaurant type') !== true)  return false
+            // if (this.validateDate(dateTime) !== true)                            return false
+            if (this.validatePrice(averagePrice) !== true) return false
         }
 
         function validateReporterName (name) {
@@ -301,8 +304,27 @@
         }
 
         function validateRestaurantName (name) {
-            let nameNotValidMessage = 'Please enter more than 3 characters.'
+            let nameNotValidMessage = 'Please enter more than 3 characters for restaurant name.'
             if (name.length < 3) return this.alertError(nameNotValidMessage)
+            return true
+        }
+
+        function validateEmpty (string, target) {
+            let messageError = `${target} can not be empty`
+            if (string.length < 1) return this.alertError(messageError)
+            return true
+        }
+
+        function validateDate (date) {
+            let validateDate = moment(date)
+            let messageError = `Date visit is not valid`
+            if (validateDate.isValid()) return true
+            return this.alertError(messageError)
+        }
+
+        function validatePrice (price) {
+            let messageError = 'Price is not valid'
+            if (isNaN(price)) return this.alertError(messageError)
             return true
         }
     </script>
