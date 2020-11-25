@@ -290,11 +290,14 @@
             let foodRating     = $("#foodRating").val()
             let optionNote     = $("#optionNote").val()
 
-            // if (this.validateReporterName(reporterName) !== true)                return false
-            // if (this.validateRestaurantName(restaurantName) !== true)            return false
-            // if (this.validateEmpty(restaurantType, 'Restaurant type') !== true)  return false
-            // if (this.validateDate(dateTime) !== true)                            return false
-            if (this.validatePrice(averagePrice) !== true) return false
+            if (this.validateReporterName(reporterName) !== true)                return false
+            if (this.validateRestaurantName(restaurantName) !== true)            return false
+            if (this.validateEmpty(restaurantType, 'Restaurant type') !== true)  return false
+            if (this.validateDate(dateTime) !== true)                            return false
+            if (this.validatePrice(averagePrice) !== true)                       return false
+            if (this.validateRating(serviceRating, 'Service rating') !== true)   return false
+            if (this.validateRating(cleanRating, 'Cleanliness rating') !== true) return false
+            if (this.validateRating(foodRating, 'Food quality rating') !== true) return false
         }
 
         function validateReporterName (name) {
@@ -325,6 +328,12 @@
         function validatePrice (price) {
             let messageError = 'Price is not valid'
             if (isNaN(price)) return this.alertError(messageError)
+            return true
+        }
+
+        function validateRating (rating, target) {
+            let messageError = `${target} is not valid`
+            if (isNaN(rating) || rating < 1 || rating > 5) return this.alertError(messageError)
             return true
         }
     </script>
