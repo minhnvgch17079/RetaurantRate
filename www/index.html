@@ -117,8 +117,22 @@
                         </h3>
                     </div>
 
+                    <div id="showError" class="alert alert-warning alert-dismissible fade" role="alert">
+                        <strong id="messageError">No Error Found</strong>
+                        <button type="button" class="close" aria-label="Close" onclick="hideError()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
                     <div class="modal-body">
                         <table class="table table-striped" style="width: 100%;">
+                            <tr>
+                                <td>Your Name <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <input class="form-control" type="text" name="reporterName" id="reporterName">
+                                </td>
+                            </tr>
+
                             <tr>
                                 <td>
                                     Restaurant Name <span class="text-danger">(*)</span>
@@ -233,16 +247,10 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <td>Your Name <span class="text-danger">(*)</span></td>
-                                <td>
-                                    <input class="form-control" type="text" name="reporterName" id="reporterName">
-                                </td>
-                            </tr>
 
                             <tr>
                                 <td>
-                                    <button type="button" class="btn btn-outline-info form-control">Submit</button>
+                                    <button type="button" class="btn btn-outline-info form-control" onclick="createRating()">Submit</button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-outline-info form-control" data-dismiss="modal">Cancel</button>
@@ -259,6 +267,44 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
         app.initialize();
+
+        function alertError (message) {
+            $("#showError").addClass("show")
+            $("#messageError").text(message)
+            return false
+        }
+
+        function hideError () {
+            $("#showError").removeClass("show")
+        }
+
+        function createRating () {
+            let reporterName   = $("#reporterName").val()
+            let restaurantName = $("#restaurantName" ).val()
+            let restaurantType = $("#restaurantType").val()
+            let dateTime       = $("#dateTimeVisit").val()
+            let averagePrice   = $("#avgPrice").val()
+            let serviceRating  = $("#serviceRating").val()
+            let cleanRating    = $("#cleanRating").val()
+            let foodRating     = $("#foodRating").val()
+            let optionNote     = $("#optionNote").val()
+
+            if (this.validateReporterName(reporterName) !== true)       return false
+            if (this.validateRestaurantName(restaurantName) !== true)   return false
+
+        }
+
+        function validateReporterName (name) {
+            let nameNotValidMessage = 'Please enter more than 3 characters for your name.'
+            if (name.length < 3) return this.alertError(nameNotValidMessage)
+            return true
+        }
+
+        function validateRestaurantName (name) {
+            let nameNotValidMessage = 'Please enter more than 3 characters.'
+            if (name.length < 3) return this.alertError(nameNotValidMessage)
+            return true
+        }
     </script>
 </body>
 
