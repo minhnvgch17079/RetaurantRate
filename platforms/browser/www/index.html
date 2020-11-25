@@ -13,117 +13,247 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Restaurant Rate</title>
 </head>
 
 <body>
-    <div class="app">
-        <button type="button" class="btn btn-outline-success">RATING RESTAURANT</button>
-        <br>
-        <br>
+    <div class="container">
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <table class="table table-striped table-dark" style="width: 100%;">
-            <tr>
-                <th scope="col" colspan="2">
-                    i-Rate
-                </th>
-            </tr>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ml-1 mr-1">
+                            <select class="form-control">
+                                <option value="">Restaurant Type</option>
+                                <option value="Grill">Grill</option>
+                                <option value="Fast Food">Fast Food</option>
+                                <option value="Sea Food">Sea Food</option>
+                            </select>
+                        </li>
+                        <li class="nav-item ml-1 mr-1">
+                            <select class="form-control">
+                                <option value="">Service</option>
+                                <option value="1">
+                                    1 &#9733;
+                                </option>
+                                <option value="2">
+                                    2 &#9733;
+                                </option>
+                                <option value="3">
+                                    3 &#9733;
+                                </option>
+                                <option value="4">
+                                    4 &#9733;
+                                </option>
+                                <option value="5">
+                                    5 &#9733;
+                                </option>
+                            </select>
+                        </li>
+                        <li class="nav-item ml-1 mr-1">
+                            <select class="form-control">
+                                <option value="">Cleanliness</option>
+                                <option value="1">
+                                    1 &#9733;
+                                </option>
+                                <option value="2">
+                                    2 &#9733;
+                                </option>
+                                <option value="3">
+                                    3 &#9733;
+                                </option>
+                                <option value="4">
+                                    4 &#9733;
+                                </option>
+                                <option value="5">
+                                    5 &#9733;
+                                </option>
+                            </select>
+                        </li>
+                        <li class="nav-item ml-1 mr-1">
+                            <select class="form-control">
+                                <option value="">Quality</option>
+                                <option value="1">
+                                    1 &#9733;
+                                </option>
+                                <option value="2">
+                                    2 &#9733;
+                                </option>
+                                <option value="3">
+                                    3 &#9733;
+                                </option>
+                                <option value="4">
+                                    4 &#9733;
+                                </option>
+                                <option value="5">
+                                    5 &#9733;
+                                </option>
+                            </select>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-3" type="search" placeholder="Restaurant Name" aria-label="Search">
+                        <button class="btn btn-outline-info my-2 my-sm-0 mr-3" type="submit">Search</button>
+                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ratingPopUp">ADD RATING</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
 
-            <tr>
-                <td>
-                    Restaurant Name <span class="text-danger">(*)</span>
-                </td>
-                <td>
-                    <input class="form-control" type="text" name="restaurantName" id="restaurantName">
-                </td>
-            </tr>
+        <div class="modal fade" id="ratingPopUp" tabindex="-1" role="dialog" aria-labelledby="ratingPopUp" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">
+                            <span class="badge badge-info">
+                                Rating Restaurant
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </span>
+                        </h3>
+                    </div>
 
-            <tr>
-                <td>Restaurant Type <span class="text-danger">(*)</span></td>
-                <td>
-                    <select class="form-control" name="restaurantType" id="restaurantType">
-                        <option value="">--Choose--</option>
-                        <option value="Grill">Grill</option>
-                        <option value="Fast Food">Fast Food</option>
-                        <option value="Sea Food">Sea Food</option>
-                    </select>
-                </td>
-            </tr>
+                    <div class="modal-body">
+                        <table class="table table-striped" style="width: 100%;">
+                            <tr>
+                                <td>
+                                    Restaurant Name <span class="text-danger">(*)</span>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="restaurantName" id="restaurantName">
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Date And Time Visit <span class="text-danger">(*)</span></td>
-                <td>
-                    <input class="form-control" type="date" name="dateTimeVisit" id="dateTimeVisit">
-                </td>
-            </tr>
+                            <tr>
+                                <td>Restaurant Type <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <select class="form-control" name="restaurantType" id="restaurantType">
+                                        <option value="">--Choose--</option>
+                                        <option value="Grill">Grill</option>
+                                        <option value="Fast Food">Fast Food</option>
+                                        <option value="Sea Food">Sea Food</option>
+                                    </select>
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Average Meal Price / Person <span class="text-danger">(*)</span></td>
-                <td>
-                    <input class="form-control" type="number" name="avgPrice" id="avgPrice">
-                </td>
-            </tr>
+                            <tr>
+                                <td>Date And Time Visit <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <input class="form-control" type="date" name="dateTimeVisit" id="dateTimeVisit">
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Service Rating <span class="text-danger">(*)</span></td>
-                <td>
-                    <select class="form-control" name="serviceRating" id="serviceRating">
-                        <option value="">--Choose--</option>
-                        <option value="OKAY">OKAY</option>
-                        <option value="Good">Good</option>
-                        <option value="Excellent">Excellent</option>
-                    </select>
-                </td>
-            </tr>
+                            <tr>
+                                <td>Average Meal Price / Person <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <input class="form-control" type="number" name="avgPrice" id="avgPrice">
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Cleanliness Rating <span class="text-danger">(*)</span></td>
-                <td>
-                    <select class="form-control" name="cleanRating" id="cleanRating">
-                        <option value="">--Choose--</option>
-                        <option value="OKAY">OKAY</option>
-                        <option value="Good">Good</option>
-                        <option value="Excellent">Excellent</option>
-                    </select>
-                </td>
-            </tr>
+                            <tr>
+                                <td>Service Rating <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <select class="form-control" name="serviceRating" id="serviceRating">
+                                        <option value="">--Choose--</option>
+                                        <option value="1">
+                                            1 &#9733;
+                                        </option>
+                                        <option value="2">
+                                            2 &#9733;
+                                        </option>
+                                        <option value="3">
+                                            3 &#9733;
+                                        </option>
+                                        <option value="4">
+                                            4 &#9733;
+                                        </option>
+                                        <option value="5">
+                                            5 &#9733;
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Food Quality Rating <span class="text-danger">(*)</span></td>
-                <td>
-                    <select class="form-control" name="foodRating" id="foodRating">
-                        <option value="">--Choose--</option>
-                        <option value="OKAY">OKAY</option>
-                        <option value="Good">Good</option>
-                        <option value="Excellent">Excellent</option>
-                    </select>
-                </td>
-            </tr>
+                            <tr>
+                                <td>Cleanliness Rating <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <select class="form-control" name="cleanRating" id="cleanRating">
+                                        <option value="">--Choose--</option>
+                                        <option value="1">
+                                            1 &#9733;
+                                        </option>
+                                        <option value="2">
+                                            2 &#9733;
+                                        </option>
+                                        <option value="3">
+                                            3 &#9733;
+                                        </option>
+                                        <option value="4">
+                                            4 &#9733;
+                                        </option>
+                                        <option value="5">
+                                            5 &#9733;
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Notes (optional)</td>
-                <td>
-                    <input class="form-control" type="text" name="optionNote" id="optionNote">
-                </td>
-            </tr>
+                            <tr>
+                                <td>Food Quality Rating <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <select class="form-control" name="foodRating" id="foodRating">
+                                        <option value="">--Choose--</option>
+                                        <option value="1">
+                                            1 &#9733;
+                                        </option>
+                                        <option value="2">
+                                            2 &#9733;
+                                        </option>
+                                        <option value="3">
+                                            3 &#9733;
+                                        </option>
+                                        <option value="4">
+                                            4 &#9733;
+                                        </option>
+                                        <option value="5">
+                                            5 &#9733;
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-            <tr>
-                <td>Your Name <span class="text-danger">(*)</span></td>
-                <td>
-                    <input class="form-control" type="text" name="reporterName" id="reporterName">
-                </td>
-            </tr>
+                            <tr>
+                                <td>Notes (optional)</td>
+                                <td>
+                                    <input class="form-control" placeholder="Anything want to tell us" type="text" name="optionNote" id="optionNote">
+                                </td>
+                            </tr>
 
-            <tr>
-                <td colspan="2">
-                    <button type="button" class="btn btn-outline-info form-control">Submit</button>
-                </td>
-            </tr>
+                            <tr>
+                                <td>Your Name <span class="text-danger">(*)</span></td>
+                                <td>
+                                    <input class="form-control" type="text" name="reporterName" id="reporterName">
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info form-control">Submit</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info form-control" data-dismiss="modal">Cancel</button>
+                                </td>
+                            </tr>
 
-
-        </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
