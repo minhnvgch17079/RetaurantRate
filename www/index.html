@@ -14,6 +14,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="js/database.js"></script>
+    <script type="text/javascript" src="js/rating.js"></script>
     <title>Restaurant Rate</title>
 </head>
 
@@ -97,9 +99,9 @@
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-3" type="search" placeholder="Restaurant Name" aria-label="Search">
-                        <button class="btn btn-outline-info my-2 my-sm-0 mr-3" type="submit">Search</button>
-                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ratingPopUp">ADD RATING</button>
+                        <input class="form-control mr-1 ml-1" type="search" placeholder="Restaurant Name" aria-label="Search">
+                        <button class="btn btn-outline-info my-2 my-sm-0 mr-1 ml-1" type="submit">Search</button>
+                        <button type="button" class="btn btn-outline-success mr-1 ml-1" data-toggle="modal" data-target="#ratingPopUp">ADD RATING</button>
                     </form>
                 </div>
             </nav>
@@ -117,7 +119,7 @@
                         </h3>
                     </div>
 
-                    <div id="showError" class="alert alert-warning alert-dismissible fade" role="alert">
+                    <div id="showError" class="alert alert-dismissible fade" role="alert">
                         <strong id="messageError">No Error Found</strong>
                         <button type="button" class="close" aria-label="Close" onclick="hideError()">
                             <span aria-hidden="true">&times;</span>
@@ -164,7 +166,7 @@
                             <tr>
                                 <td>Average Meal Price / Person <span class="text-danger">(*)</span></td>
                                 <td>
-                                    <input class="form-control" type="number" name="avgPrice" id="avgPrice">
+                                    <input class="form-control" type="number" name="avgPrice" id="avgPrice" placeholder="$">
                                 </td>
                             </tr>
 
@@ -268,8 +270,16 @@
     <script type="text/javascript" src="js/moment.js"></script>
     <script type="text/javascript">
         app.initialize();
+        databaseHandler.createDatabase()
 
-        function alertError (message) {
+        function alertError (message, isSuccess = false) {
+            if (isSuccess === true) {
+                $("#showError").addClass("alert-success")
+                $("#showError").removeClass("alert-warning")
+            } else {
+                $("#showError").addClass("alert-warning")
+                $("#showError").removeClass("alert-success")
+            }
             $("#showError").addClass("show")
             $("#messageError").text(message)
             return false
@@ -298,7 +308,15 @@
             if (this.validateRating(serviceRating, 'Service rating') !== true)   return false
             if (this.validateRating(cleanRating, 'Cleanliness rating') !== true) return false
             if (this.validateRating(foodRating, 'Food quality rating') !== true) return false
+
+            try {
+                restaurantRating.addRating(restaurantName, dateTime, averagePrice, serviceRating, cleanRating, foodRating, optionNote, reporterName)
+                alertError('Add rating successfully', true)
+            } catch (exception) {
+                alertError('There was some error when add rating. Please try again')
+            }
         }
+
 
         function validateReporterName (name) {
             let nameNotValidMessage = 'Please enter more than 3 characters for your name.'
@@ -327,7 +345,7 @@
 
         function validatePrice (price) {
             let messageError = 'Price is not valid'
-            if (isNaN(price)) return this.alertError(messageError)
+            if (isNaN(price) || price < 1) return this.alertError(messageError)
             return true
         }
 
