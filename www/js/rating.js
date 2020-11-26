@@ -17,5 +17,23 @@ var restaurantRating = {
             function (error) {},
             function () {}
         )
+    },
+
+    getRating: function (page, limit) {
+        page = page - 1
+        databaseHandler.db.readTransaction(
+            function (tx) {
+                tx.executeSql(
+                    "SELECT * FROM restaurant_rating LIMIT " + page + "," + limit,
+                    [],
+                    function (tx, result) {
+                        showProduct(result)
+                    },
+                    function (tx, error) {
+                        console.log('Error when get rating: ' + error.message)
+                    }
+                )
+            }
+        )
     }
 }
