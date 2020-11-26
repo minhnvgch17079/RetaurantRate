@@ -265,7 +265,10 @@
     </div>
     <div>
         <div class="card w-100" id="mainContent"></div>
-        <button type="button" class="w-100 btn btn-outline-info" onclick="loadMore()">Load More</button>
+        <button type="button" class="w-100 btn btn-outline-info" onclick="loadMore()">
+            Load More
+            <i id="loadMoreIcon" aria-hidden="true"></i>
+        </button>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
@@ -280,13 +283,31 @@
 
         var page = 1
 
+        function refreshContent () {
+            this.page = 1
+            $('#mainContent').children().remove()
+            this.getRating()
+        }
+
         function getRating (page = 1, limit = 5) {
             this.page = page
             restaurantRating.getRating(this.page, limit)
         }
 
         function loadMore () {
-            this.getRating(this.page + 1)
+            $('#loadMoreIcon').addClass('fa fa-spin fa-spinner')
+            setTimeout(function () {
+                $('#loadMoreIcon').removeClass('fa fa-spin fa-spinner')
+                this.getRating(this.page + 1)
+            }, 2500)
+        }
+
+        function removeRating (idRating) {
+            let isRemove = confirm('Are you sure want to delete this ?')
+            if (!isRemove) return
+            try {
+                restaurantRating.removeRating(idRating)
+            } catch (exception) {}
         }
 
         function showProduct (result) {
@@ -308,11 +329,10 @@
                                 `<td>${e.food_rating} <i class="fa fa-star" aria-hidden="true"></i></td>` +
                             '</tr>' +
                         '</table>' +
-                        '<p>' +
-                            `By ${e.cus_name}` +
-                            '<i class="fa fa-thumbs-up ml-1 mr-1" aria-hidden="true"></i>' +
-                            '<i class="fa fa-heart ml-1 mr-1" aria-hidden="true"></i>' +
-                        '</p>' +
+                        '<div class="clearfix">' +
+                            `<div class="pull-left">By ${e.cus_name} <i class="fa fa-thumbs-up ml-1 mr-1" aria-hidden="true"></i> <i class="fa fa-heart ml-1 mr-1" aria-hidden="true"></i></div>` +
+                            `<div class="pull-right"><i class="fa fa-pencil ml-1 mr-1"></i><i onclick="removeRating(${e.id})" class="fa fa-remove ml-1 mr-1"></i></div>` +
+                        '</div>' +
                         '<hr>' +
                     '</div>'
                 )
@@ -355,6 +375,9 @@
             if (this.validateRating(serviceRating, 'Service rating') !== true)   return false
             if (this.validateRating(cleanRating, 'Cleanliness rating') !== true) return false
             if (this.validateRating(foodRating, 'Food quality rating') !== true) return false
+
+            let isCreate = confirm('Are you sure want to add this rating?')
+            if (!isCreate) return
 
             try {
                 restaurantRating.addRating(restaurantName, dateTime, averagePrice, serviceRating, cleanRating, foodRating, optionNote, reporterName)

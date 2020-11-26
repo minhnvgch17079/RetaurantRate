@@ -35,5 +35,22 @@ var restaurantRating = {
                 )
             }
         )
+    },
+
+    removeRating: function (idRating) {
+        databaseHandler.db.transaction(
+            function (tx) {
+                tx.executeSql(
+                    "DELETE FROM restaurant_rating WHERE id = " + idRating,
+                    [],
+                    function (tx, result) {
+                        refreshContent()
+                    },
+                    function (tx, error) {
+                        console.log('Error remove rating: ' + error.message)
+                    }
+                )
+            }
+        )
     }
 }
