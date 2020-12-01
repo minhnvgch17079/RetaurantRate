@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ml-1 mr-1 mb-1">
-                        <select class="form-control">
+                        <select name="searchResType" id="searchResType" class="form-control">
                             <option value="">Restaurant Type</option>
                             <option value="Grill">Grill</option>
                             <option value="Fast Food">Fast Food</option>
@@ -37,7 +37,7 @@
                         </select>
                     </li>
                     <li class="nav-item ml-1 mr-1 mb-1">
-                        <select class="form-control">
+                        <select name="searchService" id="searchService" class="form-control">
                             <option value="">Service</option>
                             <option class="text-danger" value="1">
                                 1 &#9733
@@ -57,7 +57,7 @@
                         </select>
                     </li>
                     <li class="nav-item ml-1 mr-1 mb-1">
-                        <select class="form-control">
+                        <select name="searchClean" id="searchClean" class="form-control">
                             <option value="">Cleanliness</option>
                             <option class="text-danger" value="1">
                                 1 &#9733
@@ -77,7 +77,7 @@
                         </select>
                     </li>
                     <li class="nav-item ml-1 mr-1 mb-1">
-                        <select class="form-control">
+                        <select name="searchQuality" id="searchQuality" class="form-control">
                             <option value="">Quality</option>
                             <option class="text-danger" value="1">
                                 1 &#9733
@@ -98,8 +98,8 @@
                     </li>
                 </ul>
                 <form class="form-inline my-lg-0">
-                    <input class="form-control mr-1 ml-1" type="search" placeholder="Restaurant Name" aria-label="Search">
-                    <button class="btn btn-outline-info my-2 my-sm-0 mr-1 ml-1" type="submit">Search</button>
+                    <input name="searchName" id="searchName" class="form-control mr-1 ml-1" type="search" placeholder="Restaurant Name" aria-label="Search">
+                    <button type="button" class="btn btn-outline-info my-2 my-sm-0 mr-1 ml-1" onclick="searchByCondition()">Search</button>
                     <button type="button" class="btn btn-outline-success mr-1 ml-1" data-toggle="modal" data-target="#ratingPopUp">ADD RATING</button>
                 </form>
             </div>
@@ -283,10 +283,22 @@
 
         var page = 1
 
-        function refreshContent () {
+        function searchByCondition () {
+            let data = {
+                res_type : $('#searchResType').val(),
+                service_rating : $('#searchService').val(),
+                cleanliness_rating : $('#searchClean').val(),
+                food_rating : $('#searchQuality').val(),
+                name : $('#searchName').val()
+            }
+
+            restaurantRating.getRatingByConditions(data)
+        }
+
+        function refreshContent (getRating = true) {
             this.page = 1
             $('#mainContent').children().remove()
-            this.getRating()
+            if (getRating === true) this.getRating()
         }
 
         function getRating (page = 1, limit = 5) {
@@ -310,6 +322,10 @@
             } catch (exception) {}
         }
 
+        function editRating (data) {
+            // $('#myModal').modal('show')
+        }
+
         function showProduct (result) {
             Object.values(result.rows).forEach(e => {
                 $('#mainContent').append(
@@ -331,7 +347,9 @@
                         '</table>' +
                         '<div class="clearfix">' +
                             `<div class="pull-left">By ${e.cus_name} <i class="fa fa-thumbs-up ml-1 mr-1" aria-hidden="true"></i> <i class="fa fa-heart ml-1 mr-1" aria-hidden="true"></i></div>` +
-                            `<div class="pull-right"><i class="fa fa-pencil ml-1 mr-1"></i><i onclick="removeRating(${e.id})" class="fa fa-remove ml-1 mr-1"></i></div>` +
+                            `<div class="pull-right">` +
+                                `<i onclick="editRating(${e})" class="fa fa-pencil ml-1 mr-1"></i>` +
+                                `<i onclick="removeRating(${e.id})" class="fa fa-remove ml-1 mr-1"></i></div>` +
                         '</div>' +
                         '<hr>' +
                     '</div>'
@@ -380,7 +398,7 @@
             if (!isCreate) return
 
             try {
-                restaurantRating.addRating(restaurantName, dateTime, averagePrice, serviceRating, cleanRating, foodRating, optionNote, reporterName)
+                restaurantRating.addRating(restaurantName, restaurantType, dateTime, averagePrice, serviceRating, cleanRating, foodRating, optionNote, reporterName)
                 alertError('Add rating successfully', true)
             } catch (exception) {
                 alertError('There was some error when add rating. Please try again')

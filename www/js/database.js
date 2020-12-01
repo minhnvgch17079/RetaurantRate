@@ -7,7 +7,7 @@ var databaseHandler = {
         this.db.transaction (
             function (tx) {
                 tx.executeSql(
-                    "CREATE TABLE IF NOT EXISTS restaurant_rating (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL , date_visit DATE NOT NULL, avg_price INTEGER NOT NULL, service_rating INTEGER NOT NULL, cleanliness_rating INTEGER NOT NULL, food_rating INTEGER NOT NULL, cus_note TEXT, cus_name TEXT NOT NULL )",
+                    "CREATE TABLE IF NOT EXISTS restaurant_rating (id INTEGER PRIMARY KEY AUTOINCREMENT,res_type TEXT NOT NULL, name TEXT NOT NULL , date_visit DATE NOT NULL, avg_price INTEGER NOT NULL, service_rating INTEGER NOT NULL, cleanliness_rating INTEGER NOT NULL, food_rating INTEGER NOT NULL, cus_note TEXT, cus_name TEXT NOT NULL )",
                     [],
                     function (tx, result) {},
                     function (tx, error) {
