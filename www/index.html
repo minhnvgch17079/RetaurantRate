@@ -315,8 +315,18 @@
         }
 
         function removeRating (idRating) {
-            let isRemove = confirm('Are you sure want to delete this ?')
-            if (!isRemove) return
+            id = idRating
+            this.showDialogConfirm('Are you sure want to delete this ?', removeRatingProcess)
+        }
+
+        var id = null
+        function removeRatingProcess () {
+            if (id === null) return
+            idRating     = id
+            id           = null
+            callBackFunc = null
+            // let isRemove = confirm('Are you sure want to delete this ?')
+            // if (!isRemove) return
             try {
                 restaurantRating.removeRating(idRating)
             } catch (exception) {}
@@ -394,6 +404,8 @@
         }
 
         function createRatingProcess () {
+            callBackFunc = null
+
             let reporterName   = $("#reporterName").val()
             let restaurantName = $("#restaurantName" ).val()
             let restaurantType = $("#restaurantType").val()
