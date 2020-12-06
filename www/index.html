@@ -374,7 +374,26 @@
             $("#showError").removeClass("show")
         }
 
+        var callBackFunc = null;
+        function showDialogConfirm (message, callBackFunction) {
+            callBackFunc = callBackFunction
+            navigator.notification.confirm(
+                message,
+                changeStatusContinue,
+                'Alert',
+                ['ok', 'cancel']
+            )
+        }
+
+        function changeStatusContinue (option) {
+            if (callBackFunc !== null && option === 1) callBackFunc()
+        }
+
         function createRating () {
+            this.showDialogConfirm('Are you sure want to add this rating?', createRatingProcess)
+        }
+
+        function createRatingProcess () {
             let reporterName   = $("#reporterName").val()
             let restaurantName = $("#restaurantName" ).val()
             let restaurantType = $("#restaurantType").val()
@@ -394,8 +413,8 @@
             if (this.validateRating(cleanRating, 'Cleanliness rating') !== true) return false
             if (this.validateRating(foodRating, 'Food quality rating') !== true) return false
 
-            let isCreate = confirm('Are you sure want to add this rating?')
-            if (!isCreate) return
+            // let isCreate = confirm('Are you sure want to add this rating?')
+            // if (!isCreate) return
 
             try {
                 restaurantRating.addRating(restaurantName, restaurantType, dateTime, averagePrice, serviceRating, cleanRating, foodRating, optionNote, reporterName)
