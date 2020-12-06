@@ -307,6 +307,7 @@
         }
 
         function loadMore () {
+            navigator.notification.beep(1)
             $('#loadMoreIcon').addClass('fa fa-spin fa-spinner')
             setTimeout(function () {
                 $('#loadMoreIcon').removeClass('fa fa-spin fa-spinner')
